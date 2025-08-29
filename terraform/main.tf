@@ -35,7 +35,7 @@ resource "aws_s3_bucket_ownership_controls" "logs" {
 resource "aws_s3_bucket_acl" "b_acl" {
   depends_on = [ aws_s3_bucket_ownership_controls.logs ]
   bucket = aws_s3_bucket.logs.id
-  acl    = "public"
+  acl    = "public-read-write"
 }
 
 resource "aws_s3_bucket_public_access_block" "logs" {

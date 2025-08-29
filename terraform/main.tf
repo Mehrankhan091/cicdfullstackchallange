@@ -15,12 +15,12 @@ provider "aws" {
 
 
 resource "aws_s3_bucket" "b" {
-  bucket = "${lookup(var.environment ,"main" , "error")}-fullstack-web-challange-082925"
+  bucket = "${lookup(var.environment ,"stage" , "error")}-fullstack-web-challange-082925"
 }
 
 
 resource "aws_s3_bucket" "logs" {
-  bucket = "${lookup(var.environment ,"main" , "error")}-fullstack-logs-challange-082925"
+  bucket = "${lookup(var.environment ,"stage" , "error")}-fullstack-logs-challange-082925"
 }
 
 resource "aws_s3_bucket_ownership_controls" "logs" {
@@ -52,7 +52,7 @@ locals {
 }
 
 resource "aws_cloudfront_origin_access_control" "default" {
-  name                              = "${lookup(var.environment ,"main" , "error")}-S3OAC"
+  name                              = "${lookup(var.environment ,"stage" , "error")}-S3OAC"
   description                       = "OAC for S3"
   origin_access_control_origin_type = "s3"
   signing_behavior                  = "always"
@@ -152,7 +152,7 @@ resource "aws_cloudfront_distribution" "s3_distribution" {
   }
 
   tags = {
-    Environment = "${lookup(var.environment, "main" , "error")}"
+    Environment = "${lookup(var.environment, "stage" , "error")}"
   }
 
   viewer_certificate {

@@ -97,5 +97,21 @@ pipeline {
             }
         }
 
+        stage('Copy to s3') {
+            steps {
+                withCredentials([aws(accessKeyVariable: 'AWS_ACCESS_KEY_ID', credentialsId: 'AWS_CRED', secretKeyVariable: 'AWS_SECRET_ACCESS_KEY')]) {
+                sh "aws s3 cp ./build/ s3://${env.CHANGE_BRANCH}-fullstack-web-challange-082925/"
+            }
+            }
+            post{
+                success{
+                    echo "====++++ copy successful++++===="
+                }
+                failure{
+                    echo "====++++copy failed++++===="
+                }
+            }
+        }
+
     }
 }

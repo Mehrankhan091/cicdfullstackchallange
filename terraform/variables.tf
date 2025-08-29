@@ -1,5 +1,9 @@
-# In this file put the variables related to the deployment
-variable "variable_name" {
-    type = "type",
-    description = "Description"
+variable "environment" {
+    type = map(string)
+    default = {
+      "main" = "main"
+      "devel" = "devel"
+      "stage" = "stage"
+    }
+  
 }

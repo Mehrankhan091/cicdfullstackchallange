@@ -71,5 +71,31 @@ pipeline {
             }
         }
 
+        stage('Terraform Infra ') {
+            steps {
+                withCredentials([aws(accessKeyVariable: 'AWS_ACCESS_KEY_ID', credentialsId: 'AWS_CRED', secretKeyVariable: 'AWS_SECRET_ACCESS_KEY')]) {
+                    dir('terraform'){
+                        script{
+                            sh 'terraform init -input=false'
+
+                            sh "terraform workspace new ${env.CHANGE_BRANCH} || terraform workspace select ${env.CHANGE_BRANCH} "
+
+                            sh 'terraform plan -input=false'
+
+                            sh 'terraform apply -input=false -auto-approve'
+                        }
+                    }
+                }
+            }
+            post{
+                success{
+                    echo "====++++ Terraform infra success successful++++===="
+                }
+                failure{
+                    echo "====++++Terraform infra success  failed++++===="
+                }
+            }
+        }
+
     }
 }

@@ -162,7 +162,7 @@ resource "aws_cloudfront_distribution" "s3_distribution" {
 
 
 resource "aws_s3_bucket_policy" "web" {
-  bucket = aws_s3_bucket.web.id
+  bucket = aws_s3_bucket.b.id
   policy = data.aws_iam_policy_document.web.json
 }
 

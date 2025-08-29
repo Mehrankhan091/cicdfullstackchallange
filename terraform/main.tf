@@ -39,7 +39,7 @@ resource "aws_s3_bucket_acl" "b_acl" {
 }
 
 resource "aws_s3_bucket_public_access_block" "logs" {
-  bucket = aws_s3_bucket.example.id
+  bucket = aws_s3_bucket.logs.id
 
   block_public_acls       = false
   block_public_policy     = true
@@ -178,7 +178,7 @@ data "aws_iam_policy_document" "web" {
     ]
 
     resources = [
-      "${aws_s3_bucket.web.arn}/*"
+      "${aws_s3_bucket.b.arn}/*"
     ]
   }
 }
@@ -200,7 +200,7 @@ data "aws_iam_policy_document" "logs" {
     ]
 
     resources = [
-      "${aws_s3_bucket.web.arn}/*"
+      "${aws_s3_bucket.logs.arn}/*"
     ]
   }
 
